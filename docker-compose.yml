@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    container_name: node
+    command: npm run dev
+    ports:
+      - "8181:8181"
+    volumes:
+      - .:/usr/src/service
+    networks:
+      - net
+    depends_on:
+      - db
+    environment:
+      - PORT=8181
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=18563026
+      - EGG_SERVER=local
+      - NODE_ENV=development
+  db:
+    image: mysql:5.7
+    volumes:
+      - db-storage:/var/lib/mysql/data
+    container_name: mysql
+    command: /bin/bash
+    ports:
+      - "3316:3316"
+    networks:
+      - net
+volumes:
+  db-storage:
+networks:
+  net:
+#Optionals
+# networks:
