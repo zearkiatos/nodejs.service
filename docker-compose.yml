@@ -27,13 +27,17 @@ services:
   db:
     image: mysql:5.7
     volumes:
-      - db-storage:/var/lib/mysql/data
+      - db-storage:/var/lib/mysql
+    env_file:
+      - common.env
     container_name: mysql
-    command: /bin/bash
     ports:
-      - "3316:3316"
+      - "3316:3306"
     networks:
       - net
+    restart: always
+    expose:
+      - "3306"
 volumes:
   db-storage:
 networks:
